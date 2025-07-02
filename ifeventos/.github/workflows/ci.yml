@@ -36,7 +36,7 @@ jobs:
         run: php artisan migrate --force
 
       - name: Run tests
+        run: ./vendor/bin/phpunit 
 
       - name: Run Laravel Pint (lint)
         run: ./vendor/bin/pint --test
-
