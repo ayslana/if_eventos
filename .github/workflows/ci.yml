@@ -2,41 +2,73 @@ name: Laravel CI
 
 on:
   push:
-    branches: [main]
+    branches: [ "main" ]
   pull_request:
-    branches: [main]
+    branches: [ "main" ]
 
 jobs:
-  tests:
+  laravel-tests:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        php: [8.2]
+        php: [8.2] 
 
     steps:
-      - uses: actions/checkout@v3
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-          extensions: mbstring, bcmath, pdo_sqlite
-          coverage: none
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Install Composer dependencies
-        run: composer install --no-progress --prefer-dist --optimize-autoloader
+  
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+        extensions: mbstring, bcmath, pdo_sqlite, dom, curl, gd, xml
+        coverage: none
 
-      - name: Copy .env
-        run: cp .env.example .env
 
-      - name: Generate application key
-        run: php artisan key:generate
+    - name: Install Composer dependencies
+      run: composer install --no-progress --prefer-dist --optimize-autoloader
 
-      - name: Run migrations
-        run: php artisan migrate --force
+ 
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20' # Use uma versão LTS do Node
+        cache: 'npm'
 
-      - name: Run tests
-        run: ./vendor/bin/phpunit 
+    
+    - name: Install NPM dependencies
+      run: npm install
 
-      - name: Run Laravel Pint (lint)
-        run: ./vendor/bin/pint --test
+  
+    - name: Build assets
+      run: npm run build # 'npm run dev' não é ideal para CI, use 'build'
+
+
+    - name: Copy .env file
+      run: cp .env.example .env
+
+    - name: Generate application key
+      run: php artisan key:generate
+
+ 
+    - name: Create SQLite database
+      run: touch database/database.sqlite
+
+    - name: Run migrations
+      env:
+        DB_CONNECTION: sqlite
+        DB_DATABASE: database/database.sqlite
+      run: php artisan migrate --force
+
+    # 9. Rodar os testes e o linter
+    - name: Run PHPUnit tests
+      env:
+        DB_CONNECTION: sqlite
+        DB_DATABASE: database/database.sqlite
+      run: ./vendor/bin/phpunit
+
+    - name: Run Laravel Pint (Code Style)
+      run: ./vendor/bin/pint --test
