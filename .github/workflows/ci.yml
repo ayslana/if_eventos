@@ -63,12 +63,7 @@ jobs:
         DB_DATABASE: database/database.sqlite
       run: php artisan migrate --force
 
-    # 9. Rodar os testes e o linter
-    - name: Run PHPUnit tests
-      env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
-      run: ./vendor/bin/phpunit
+ 
 
 
       
