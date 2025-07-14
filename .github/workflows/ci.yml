@@ -70,10 +70,6 @@ jobs:
         DB_DATABASE: database/database.sqlite
       run: ./vendor/bin/phpunit
 
-    # PASSO NOVO PARA DEBUGAR: Mostra o log de erro do Laravel
-    - name: Display Laravel log
-      if: failure() # Roda este passo apenas se o anterior falhar
-      run: cat storage/logs/laravel.log
 
       
     - name: Run Laravel Pint (Code Style)
