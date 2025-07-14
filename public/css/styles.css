@@ -1,3 +1,103 @@
-* {
-    font-family: 'Roboto';
+/* --- Variáveis Globais e Reset --- */
+:root {
+    --primary-color: #F2A340;
+    --primary-color-darker: #C28008;
+    --dark-bg: #353E48;
+    --text-color: #212121;
+    --text-color-muted: #757575;
+    --card-border-radius: 10px;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+}
+
+/* --- Componentes Personalizados (Bootstrap Overrides) --- */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color-darker);
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-color-darker);
+    border-color: var(--primary-color-darker);
+}
+
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+/* --- Layout Principal (Header, Footer) --- */
+.navbar-brand img {
+    width: 45px;
+}
+
+footer {
+    background-color: var(--dark-bg);
+}
+
+/* --- Página Inicial (Welcome) --- */
+.search-banner {
+    background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("../img/banner.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+}
+
+.search-banner .form-control {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.event-card {
+    border-radius: var(--card-border-radius);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12) !important;
+}
+
+.event-card .card-img-top {
+    border-top-left-radius: var(--card-border-radius);
+    border-top-right-radius: var(--card-border-radius);
+    max-height: 180px;
+    object-fit: cover; /* Garante que a imagem cubra a área sem distorcer */
+}
+
+.event-card .card-title {
+    font-weight: 700;
+}
+
+/* --- Página de Criação de Evento --- */
+#event-create-container label {
+    font-weight: bold;
+}
+
+/* --- Página de Detalhes do Evento --- */
+#image-container img {
+    border-radius: var(--card-border-radius);
+}
+
+#info-container ion-icon {
+    font-size: 20px;
+    color: var(--primary-color);
+    margin-right: 8px;
+}
+
+/* --- Dashboard --- */
+.dashboard-events-container a {
+    text-decoration: none;
+}
+
+.dashboard-events-container .btn-info {
+    color: white;
+}
+
+.dashboard-events-container ion-icon {
+    vertical-align: middle;
+    margin-right: 4px;
 }
