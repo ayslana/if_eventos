@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
-use App\Models\Event; // Importe o seu model
+use Tests\TestCase; // Importe o seu model
 
 class ExampleTest extends TestCase
 {

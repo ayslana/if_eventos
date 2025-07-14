@@ -10,19 +10,20 @@ class event extends Model
     use HasFactory;
 
     protected $casts = [
-        'items' => 'array'
+        'items' => 'array',
     ];
 
     protected $dates = ['date'];
 
-    protected $guarded= [];
+    protected $guarded = [];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo('App\Models\User');
     }
 
-    public function users(){
+    public function users()
+    {
         return $this->belongsToMany('App\Models\User');
     }
-
 }

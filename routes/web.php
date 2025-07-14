@@ -1,7 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\EventController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,12 +11,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-use App\Http\Controllers\EventController;
-use Illuminate\Console\Scheduling\Event;
+use Illuminate\Support\Facades\Route;
 
-Route::get('/',[EventController::class, 'index'] );
-Route::get('/events/create',[EventController::class, 'create'] )->middleware('auth');
-Route::get('/events/{id}',[EventController::class, 'show'] );
+Route::get('/', [EventController::class, 'index']);
+Route::get('/events/create', [EventController::class, 'create'])->middleware('auth');
+Route::get('/events/{id}', [EventController::class, 'show']);
 Route::post('/events', [EventController::class, 'store']);
 Route::delete('/events/{id}', [EventController::class, 'destroy'])->middleware('auth');
 Route::get('events/edit/{id}', [EventController::class, 'edit'])->middleware('auth');
@@ -32,5 +30,3 @@ Route::get('/dashboard', [EventController::class, 'dashboard'])->middleware('aut
 Route::post('events/join/{id}', [EventController::class, 'joinEvent'])->middleware('auth');
 
 Route::delete('events/leave/{id}', [EventController::class, 'leaveEvent'])->middleware('auth');
-
-
