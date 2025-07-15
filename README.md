@@ -5,6 +5,7 @@
 ## Tabela de Conteúdos
 
 - [Visão Geral](#visão-geral)
+- [Relatório](#relatório)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Rodando a Aplicação Localmente](#rodando-a-aplicação-localmente)
   - [Opção 1: Ambiente Local (Manual)](#opção-1-ambiente-local-manual)
@@ -17,6 +18,12 @@
 
 (Seção opcional, mas recomendada)
 Uma descrição mais detalhada da arquitetura do projeto ou de suas principais funcionalidades.
+
+## Relatório
+
+Você pode encontrar o relatório detalhado do projeto, incluindo diagramas, análises e documentação técnica, no seguinte link:
+
+- **[Acessar o Relatório Completo](https://docs.google.com/document/d/1-BcO-krO5tgQcprQKLgmyWxmn48P3f-nKI_VfBsp1TM/edit?usp=sharing)**
 
 ## Tecnologias Utilizadas
 
