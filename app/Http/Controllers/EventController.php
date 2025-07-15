@@ -10,12 +10,13 @@ class EventController extends Controller
 {
     public function index()
     {
+
         $search = request('search');
 
         if ($search) {
-
-            $events = Event::whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($search) . '%'])
-                ->get();
+            $events = Event::where([
+                ['title', 'like', '%' . $search . '%'],
+            ])->get();
         } else {
             $events = Event::all();
         }
