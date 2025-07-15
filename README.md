@@ -4,7 +4,6 @@
 
 ## Tabela de Conteúdos
 
-- [Visão Geral](#visão-geral)
 - [Relatório](#relatório)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Rodando a Aplicação Localmente](#rodando-a-aplicação-localmente)
@@ -13,11 +12,6 @@
 - [Integração Contínua (CI)](#integração-contínua-ci)
 - [Entrega Contínua (CD)](#entrega-contínua-cd)
 - [Monitoramento](#monitoramento)
-
-## Visão Geral
-
-(Seção opcional, mas recomendada)
-Uma descrição mais detalhada da arquitetura do projeto ou de suas principais funcionalidades.
 
 ## Relatório
 
