@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # Serviço da Aplicação Laravel
+  app:
+    build: .
+    container_name: if-eventos-app
+    restart: unless-stopped
+    working_dir: /app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+  # Serviço do Banco de Dados PostgreSQL
+# Serviço do Banco de Dados PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: if-eventos-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5433:5432" # <-- MUDANÇA AQUI!
+    volumes:
+      - if-eventos-pg-data:/var/lib/postgresql/data
+volumes:
+  if-eventos-pg-data:
+    driver: local
