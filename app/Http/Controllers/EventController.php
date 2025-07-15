@@ -8,17 +8,16 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    public function index()
+   public function index()
     {
-
         $search = request('search');
+
         if ($search) {
-            $events = Event::where([
-                ['title', 'like', '%'.$search.'%'],
-            ])->get();
+         
+            $events = Event::whereRaw('LOWER(title) LIKE ?', ['%'.strtolower($search).'%'])
+                           ->get();
         } else {
             $events = Event::all();
-
         }
 
         return view('welcome', ['events' => $events, 'search' => $search]);
