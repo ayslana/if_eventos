@@ -1,9 +1,10 @@
-version: '3.8'
-
 services:
   # Serviço da Aplicação Laravel
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
     container_name: if-eventos-app
     restart: unless-stopped
     working_dir: /app
@@ -11,13 +12,14 @@ services:
       - "8000:8000"
     volumes:
       - ./:/app
+      # Adicione esta linha para isolar o node_modules do contêiner
+      - /app/node_modules
     depends_on:
       - db
     env_file:
       - .env
 
   # Serviço do Banco de Dados PostgreSQL
-# Serviço do Banco de Dados PostgreSQL
   db:
     image: postgres:15-alpine
     container_name: if-eventos-db
@@ -27,9 +29,29 @@ services:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "5433:5432" # <-- MUDANÇA AQUI!
+      - "5433:5432"
     volumes:
       - if-eventos-pg-data:/var/lib/postgresql/data
+
+  # Serviço VITE que executa 'npm run dev'
+  vite:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    container_name: if-eventos-vite
+    restart: unless-stopped
+    working_dir: /app
+    command: npm run dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./:/app
+      # Adicione esta linha também para o serviço do vite
+      - /app/node_modules
+    env_file:
+      - .env
+
 volumes:
   if-eventos-pg-data:
     driver: local

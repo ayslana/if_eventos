@@ -1,4 +1,4 @@
-# --- ESTÁGIO 1: BUILDER ---
+# --- ESTÁGIO 1: BUILDER (agora só para dependências) ---
 FROM php:8.2-fpm-alpine AS builder
 
 # Instala dependências do sistema e extensões PHP
@@ -24,27 +24,16 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
-# --- MUDANÇA IMPORTANTE AQUI ---
-# 1. Copia os arquivos de dependência primeiro para aproveitar o cache do Docker
+# Copia e instala dependências de backend e frontend
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-interaction --no-plugins --no-scripts --prefer-dist
 
 COPY package.json package-lock.json ./
 RUN npm install
 
-# 2. AGORA, copia o restante do código da aplicação
-COPY . .
-
-# 3. Com todos os arquivos no lugar, AGORA podemos rodar o build do frontend
-RUN npm run build
-
-# 4. Otimiza o Laravel para produção
-RUN php artisan config:cache && \
-    php artisan route:cache && \
-    php artisan view:cache
-
-# --- ESTÁGIO 2: PRODUÇÃO ---
-FROM php:8.2-fpm-alpine
+# --- ESTÁGIO 2: IMAGEM FINAL DE PRODUÇÃO ---
+# NOMEAMOS ESTE ESTÁGIO PARA 'production'
+FROM php:8.2-fpm-alpine AS production
 
 # Instala apenas as bibliotecas de runtime essenciais
 RUN apk add --no-cache libzip libpng libjpeg-turbo freetype postgresql-libs
@@ -57,8 +46,12 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS build-base libzip-dev 
 
 WORKDIR /app
 
-# Copia os arquivos "buildados" do estágio anterior
-COPY --from=builder /app .
+# Copia apenas as dependências pré-instaladas do estágio anterior
+COPY --from=builder /app/vendor /app/vendor
+COPY --from=builder /app/node_modules /app/node_modules
+
+# Copia o restante da aplicação
+COPY . .
 
 # Ajusta as permissões das pastas
 RUN chown -R www-data:www-data /app/storage /app/bootstrap/cache
