@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-   public function index()
+    public function index()
     {
         $search = request('search');
 
         if ($search) {
-         
-            $events = Event::whereRaw('LOWER(title) LIKE ?', ['%'.strtolower($search).'%'])
-                           ->get();
+
+            $events = Event::whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($search) . '%'])
+                ->get();
         } else {
             $events = Event::all();
         }
@@ -47,7 +47,7 @@ class EventController extends Controller
 
             $extension = $requestImage->extension();
 
-            $imageName = md5($requestImage->getClientOriginalName().strtotime('now')).'.'.$extension;
+            $imageName = md5($requestImage->getClientOriginalName() . strtotime('now')) . '.' . $extension;
 
             $requestImage->move(public_path('img/events'), $imageName);
 
@@ -78,13 +78,11 @@ class EventController extends Controller
                     $hasUserJoined = true;
                 }
             }
-
         }
 
         $eventOwner = User::where('id', $event->user_id)->first()->toArray();
 
         return view('events.show', ['event' => $event, 'eventOwner' => $eventOwner, 'hasUserJoined' => $hasUserJoined]);
-
     }
 
     public function dashboard()
@@ -132,7 +130,7 @@ class EventController extends Controller
 
             $extension = $requestImage->extension();
 
-            $imageName = md5($requestImage->getClientOriginalName().strtotime('now')).'.'.$extension;
+            $imageName = md5($requestImage->getClientOriginalName() . strtotime('now')) . '.' . $extension;
 
             $requestImage->move(public_path('img/events'), $imageName);
 
@@ -153,8 +151,7 @@ class EventController extends Controller
 
         $event = Event::findOrFail($id);
 
-        return redirect('/dashboard')->with('msg', 'Sua presença está confirmada no evento: '.$event->title);
-
+        return redirect('/dashboard')->with('msg', 'Sua presença está confirmada no evento: ' . $event->title);
     }
 
     public function leaveEvent($id)
@@ -166,7 +163,6 @@ class EventController extends Controller
 
         $event = Event::findOrFail($id);
 
-        return redirect('/dashboard')->with('msg', 'Você saiu com sucesso do evento: '.$event->title);
-
+        return redirect('/dashboard')->with('msg', 'Você saiu com sucesso do evento: ' . $event->title);
     }
 }
