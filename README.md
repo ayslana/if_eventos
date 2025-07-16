@@ -160,7 +160,7 @@ A entrega contínua (CD) é facilitada pelo uso do Docker. O `Dockerfile` do pro
 2.  **Empacotamento:** A imagem Docker gerada contém a aplicação Laravel pronta para ser executada, com o servidor PHP-FPM configurado.
 3.  **Implantação (Deploy):** A imagem pode ser enviada para um registro de contêineres (como Docker Hub, AWS ECR, ou GitHub Container Registry) e, a partir daí, implantada em qualquer ambiente de nuvem que suporte contêineres (ex: AWS, DigitalOcean, Heroku).
 
-### Como fazer o deploy (Exemplo Manual)
+### Como fazer o deploy (Exemplo Manual) o
 
 1.  **Construir a imagem de produção:**
     ```bash
